@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GameFull(props) {
+function GameFull({slugId}) {
   return (
     <li className="games__game">
       <div className="games__poster">
@@ -19,10 +19,8 @@ function GameFull(props) {
           <a href="#" className="games__site-link">Game.com</a>
 
           <div className="game__slider">
-
           </div>
         </div>
-
       </div>
       <button className="games__more-details-btn">More details</button>
     </li>
