@@ -10,11 +10,11 @@ function GamePartial({gameSlug, gameName, gamePoster, gameRating, gameReleased, 
       <h2 className="games__name">{gameName}</h2>
       <p className="games__rating">Rating: {gameRating}</p>
       <p className="games__release-date">Release date: {gameReleased}</p>
+      Platforms:
       <ul className={"games__platforms"}>
-        Platforms:
         {gamePlatforms.map(({platform: {name, slug}}) => <li className={"games__platform"} key={slug}>{name}</li>)}
       </ul>
-      <Link to={`games/${gameSlug}`} className="games__more-details-btn">More details</Link>
+      <Link to={`game/${gameSlug}`} className="games__more-details-btn">More details</Link>
     </li>
   );
 }

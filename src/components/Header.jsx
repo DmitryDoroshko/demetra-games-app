@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {fetchGamesByName} from "../store/game/gameSlice";
 
-function Header(props) {
-  const [gameSearchValue, setGameSearchValue] = useState("");
+function Header() {
+  const [gameSearchValue, setGameSearchValue] = useState("the walking dead");
   const dispatch = useDispatch();
 
   const gameSearchValueChangeHandler = ({target: {value}}) => {

@@ -1,37 +1,20 @@
 import React, {useState} from 'react';
-
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import {useSelector} from "react-redux";
-import {selectLoadedGames} from "../store/game/gameSlice";
-
-function VariantsExample() {
-  return (
-    <>
-      {['Primary', 'Secondary', 'Success', 'Info', 'Warning', 'Danger'].map(
-        (variant) => (
-          <DropdownButton
-            as={ButtonGroup}
-            key={variant}
-            id={`dropdown-variants-${variant}`}
-            variant={variant.toLowerCase()}
-            title={variant}
-          >
-            <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-            <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-            <Dropdown.Item eventKey="3" active>
-              Active Item
-            </Dropdown.Item>
-            <Dropdown.Divider/>
-            <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-          </DropdownButton>
-        ),
-      )}
-    </>
-  );
-}
-
+import {useDispatch, useSelector} from "react-redux";
+import {
+  searchGameByName,
+  selectFilteredGames, selectFilterPlatformString,
+  selectIsFiltering,
+  selectLoadedGames,
+  selectSearchNameString, setFilterPlatformString, setSearchNameString
+} from "../store/game/gameSlice";
+import {
+  sortGamesByRatingAscending,
+  sortGamesByRatingDescending,
+  sortGamesByReleaseDateAscending,
+  sortGamesByReleaseDateDescending,
+  filterGamesByPlatformName,
+  searchGameByNameAndFilterByPlatform,
+} from "../store/game/gameSlice";
 
 const options = [
   {value: 'sort-by-rating-asc', label: 'Sort by Rating ASC'},
@@ -40,28 +23,73 @@ const options = [
   {value: 'sort-by-release-date-desc', label: 'Sort by Release-date DESC'},
 ];
 
-const defaultOption = options[0];
-
-function GamesActions(props) {
+function GamesActions() {
+  const dispatch = useDispatch();
+  const gamesPlatformFilterString = useSelector(selectFilterPlatformString);
+  const gameNameSearchString = useSelector(selectSearchNameString);
   const loadedGames = useSelector(selectLoadedGames);
+  const [sortGamesOptionValue, setSortGamesOptionValue] = useState("sort-by-rating-asc");
 
   let actionsContent = <p className={"main__actions-placeholder"}>Actions will appear after searching a game</p>;
+
+  const sortGamesByOption = (optionName) => {
+    if (optionName === 'sort-by-rating-asc') {
+      dispatch(sortGamesByRatingAscending());
+    } else if (optionName === 'sort-by-rating-desc') {
+      dispatch(sortGamesByRatingDescending());
+    } else if (optionName === 'sort-by-release-date-asc') {
+      dispatch(sortGamesByReleaseDateAscending());
+    } else if (optionName === 'sort-by-release-date-desc') {
+      dispatch(sortGamesByReleaseDateDescending());
+    }
+  };
+
+  const selectSortGamesByOptionHandler = ({target: {value}}) => {
+    setSortGamesOptionValue(value);
+    sortGamesByOption(value);
+  };
+
+  const gamesPlatformFilterStringChangeHandler = ({target: {value}}) => {
+    const gamesPlatformStringValueTrimmed = value.trim();
+    dispatch(setFilterPlatformString(gamesPlatformStringValueTrimmed));
+
+    if (gamesPlatformFilterString !== "" && gameNameSearchString !== "") {
+      dispatch(searchGameByNameAndFilterByPlatform());
+    } else {
+      dispatch(filterGamesByPlatformName(gamesPlatformStringValueTrimmed));
+    }
+    sortGamesByOption(sortGamesOptionValue);
+  };
+
+  const gameNameSearchStringChangeHandler = ({target: {value}}) => {
+    const gamesNameStringValueTrimmed = value.trim();
+    dispatch(setSearchNameString(gamesNameStringValueTrimmed));
+
+    if (gamesPlatformFilterString !== "" && gameNameSearchString !== "") {
+      dispatch(searchGameByNameAndFilterByPlatform());
+    } else {
+      dispatch(searchGameByName(value));
+    }
+    sortGamesByOption(sortGamesOptionValue);
+  };
 
   if (loadedGames.length > 0) {
     actionsContent = (
       <>
         <div className="main__select-dropdown">
-          <select name="main-select-dropdown" id="main-select-dropdown">
+          <select name="main-select-dropdown" id="main-select-dropdown" onChange={selectSortGamesByOptionHandler}>
             {options.map(({value, label}) => <option key={value} value={value}>{label}</option>)}
           </select>
         </div>
 
         <div className="main__filter-by-platform">
-          <input type="text" placeholder={"Filter by platform"}/>
+          <input type="text" placeholder={"Filter by platform"} value={gamesPlatformFilterString.toString()}
+                 onChange={gamesPlatformFilterStringChangeHandler}/>
         </div>
 
         <div className="main__search-by-name">
-          <input type="text" placeholder={"Search game by name"}/>
+          <input type="text" placeholder={"Search game by name"} value={gameNameSearchString.toString()}
+                 onChange={gameNameSearchStringChangeHandler}/>
         </div>
       </>);
   }

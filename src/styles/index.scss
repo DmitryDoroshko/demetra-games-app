@@ -1,5 +1,6 @@
 $breakpoint-larger: 75em; // 1200px
 $breakpoint-large: 62.5em; // 1000px
+$breakpoint-small: 31.25em; // 500px
 
 * {
   margin: 0;
@@ -120,10 +121,14 @@ input[type="text"] {
   &__platforms {
     list-style-type: none;
     margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .5rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(3rem, 1fr));
+    justify-items: center;
+    gap: 1rem;
+
+    @media only screen and (max-width: $breakpoint-small) {
+      grid-template-columns: repeat(2, minmax(3rem, 1fr));
+    }
   }
 
   &__platform {
@@ -150,6 +155,10 @@ input[type="text"] {
     color: black;
     cursor: pointer;
     padding: 0 0 1.5rem 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__poster {
@@ -167,10 +176,11 @@ input[type="text"] {
   &__info {
     display: flex;
     flex-direction: column;
+    align-items: center;
+  }
 
-    & > p {
-
-    }
+  &__additional-info {
+    max-width: 30rem;
   }
 
   &__name {
@@ -199,9 +209,20 @@ input[type="text"] {
 }
 
 .footer {
+  margin-top: auto;
   color: white;
 
   & > a {
     color: antiquewhite;
   }
+}
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 1.5rem;
 }

@@ -1,14 +1,12 @@
-import React, {Fragment} from 'react';
-import Header from "../components/Header";
+import React from 'react';
 import Footer from "../components/Footer";
 import GameFull from "../components/GameFull";
 import {useParams} from "react-router-dom";
 
-function GameSpecificPage(props) {
+function GameSpecificPage() {
   const {slugId} = useParams();
   return (
     <div className={"app"}>
-      <Header/>
       <GameFull slugId={slugId}/>
       <Footer/>
     </div>
