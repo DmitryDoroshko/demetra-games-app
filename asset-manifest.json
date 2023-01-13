@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/demetra-games-app/static/css/main.bc46d39e.css",
+    "main.js": "/demetra-games-app/static/js/main.f831c5dc.js",
+    "index.html": "/demetra-games-app/index.html",
+    "main.bc46d39e.css.map": "/demetra-games-app/static/css/main.bc46d39e.css.map",
+    "main.f831c5dc.js.map": "/demetra-games-app/static/js/main.f831c5dc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bc46d39e.css",
+    "static/js/main.f831c5dc.js"
+  ]
+}
