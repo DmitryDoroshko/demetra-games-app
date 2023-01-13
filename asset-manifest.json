@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/demetra-games-app/static/css/main.bc46d39e.css",
-    "main.js": "/demetra-games-app/static/js/main.687a0229.js",
+    "main.js": "/demetra-games-app/static/js/main.c9870669.js",
     "index.html": "/demetra-games-app/index.html",
     "main.bc46d39e.css.map": "/demetra-games-app/static/css/main.bc46d39e.css.map",
-    "main.687a0229.js.map": "/demetra-games-app/static/js/main.687a0229.js.map"
+    "main.c9870669.js.map": "/demetra-games-app/static/js/main.c9870669.js.map"
   },
   "entrypoints": [
     "static/css/main.bc46d39e.css",
-    "static/js/main.687a0229.js"
+    "static/js/main.c9870669.js"
   ]
 }
